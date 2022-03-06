@@ -1,14 +1,14 @@
 
 MOD_PATH = "./OPEN/MOD"
 TEST_NET_PATH = "./HF/test-network"
-ORIGINAL_PATH = "./OPEN/ORIGINA"
+ORIGINAL_PATH = "./OPEN/ORIGINAL"
 
 ############ CONFIGTX FOLDER
 cp ${TEST_NET_PATH}/configtx/configtx.yaml ${ORIGINAL_PATH}/configtx/configtx.yaml
 cp ${MOD_PATH}/configtx/configtx_MOD.yaml ${TEST_NET_PATH}/configtx/configtx.yaml
 
 ############ CONFIGURATION FILES
-cp ${MOD_PATH}/configurationFiles ${TEST_NET_PATH}
+cp -r ${MOD_PATH}/configurationFiles ${TEST_NET_PATH}
 
 cp ${MOD_PATH}/hyperledgerScript.py ${TEST_NET_PATH}
 cp ${MOD_PATH}/configuration.py ${TEST_NET_PATH}
@@ -33,8 +33,6 @@ cp ${MOD_PATH}/scripts/setAnchorPeer_MOD.sh ${TEST_NET_PATH}/scripts/setAnchorPe
 cp ${TEST_NET_PATH}/organizations/ccp-generate.sh ${ORIGINAL_PATH}/organizations/ccp-generate.sh
 cp ${MOD_PATH}/organizations/ccp-generate_MOD.sh ${TEST_NET_PATH}/organizations/ccp-generate.sh
 
-cp ${TEST_NET_PATH}/organizations/ccp-generate.sh ${ORIGINAL_PATH}/organizations/ccp-generate.sh
-cp ${MOD_PATH}/organizations/ccp-generate_MOD.sh ${TEST_NET_PATH}/organizations/ccp-generate.sh
 
 
 ############################### CRYPTOGEN
@@ -47,7 +45,8 @@ done
 
 
 ################### TO DOUBLE CHECK THE PORT NUMBER 7054
-cp ${MOD_PATH}/organizations/fabric-ca/org${i}/fabric-ca-server-config.yaml  ${TEST_NET_PATH}/organizations/fabric-ca/org${i}/fabric-ca-server-config.yaml
+cp ${TEST_NET_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml ${ORIGINAL_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml
+cp ${MOD_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config_MOD.yaml  ${TEST_NET_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml
 
 
 for i in {3..8}
@@ -57,7 +56,6 @@ do
 done
 
 cp ${TEST_NET_PATH}/organizations/fabric-ca/registerEnroll.sh ${ORIGINAL_PATH}/organizations/fabric-ca/registerEnroll.sh
-
 cp ${MOD_PATH}/organizations/fabric-ca/registerEnroll_MOD.sh  ${TEST_NET_PATH}/organizations/fabric-ca/registerEnroll.sh
 
 

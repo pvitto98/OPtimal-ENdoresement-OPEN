@@ -1,0 +1,8 @@
+peer0.org1.example.com 0 10 10 10 10 10 10 10
+peer0.org2.example.com 10 0 10 10 10 10 10 10
+peer0.org3.example.com 10 10 0 10 10 10 10 10
+peer0.org4.example.com 10 10 10 0 10 10 10 10
+peer0.org5.example.com 10 10 10 10 0 10 10 10
+peer0.org6.example.com 10 10 10 10 10 0 10 10
+peer0.org7.example.com 10 10 10 10 10 10 0 10
+peer0.org8.example.com 10 10 10 10 10 10 10 0

@@ -1,0 +1,8 @@
+peer0.org1.example.com 0 50 100 150 200 250 300 350
+peer0.org2.example.com 50 0 50 100 150 200 250 300
+peer0.org3.example.com 100 50 0 50 100 150 200 250
+peer0.org4.example.com 150 100 50 0 50 100 150 200
+peer0.org5.example.com 200 150 100 50 0 50 100 150
+peer0.org6.example.com 250 200 150 100 50 0 50 100
+peer0.org7.example.com 300 250 200 150 100 50 0 50
+peer0.org8.example.com 350 300 250 200 150 100 50 0
