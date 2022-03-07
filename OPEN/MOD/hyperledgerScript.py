@@ -129,7 +129,8 @@ if __name__ == '__main__':
           HFBootDown = os.system('./network.sh down')
           HFBootup = os.system('./network.sh up createChannel -c mychannel -ca')
           HFCreateChannel = os.system('./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript/ -ccl javascript')
-          HFCreateChannel = os.system('cp ../../OPEN/MOD/firstBoot.txt ../asset-transfer-basic/application-javascript')
+          
+
 
 
           containers = generateContainerBridgeInfoFile()

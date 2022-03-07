@@ -18,8 +18,8 @@ MOD_PATH="../../../OPEN/MOD/"
       cp ./node_modules/fabric-network/lib/transaction.js ${ORIGINAL_PATH}/transaction.js
       cp  ${MOD_PATH}/transaction_MOD.js ./node_modules/fabric-network/lib/transaction.js
 
-      cp ./../../chaincode-javascript/lib/assetTransfer.js ${ORIGINAL_PATH}/assetTransfer.js
-      cp ${MOD_PATH}/assetTransfer_MOD.js ./../../chaincode-javascript/lib/assetTransfer.js
+      cp ./../chaincode-javascript/lib/assetTransfer.js ${ORIGINAL_PATH}/assetTransfer.js
+      cp ${MOD_PATH}/assetTransfer_MOD.js ./../chaincode-javascript/lib/assetTransfer.js
 
       rm ./firstBoot.txt
   fi

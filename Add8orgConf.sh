@@ -98,3 +98,5 @@ cp ${MOD_PATH}/saveOPENchanges.sh ${APP_PATH}
 cp ${MOD_PATH}/bootup.sh ${APP_PATH}
 
 cp ${MOD_PATH}/OPENactive.txt ./
+
+cp ./OPEN/MOD/firstBoot.txt ./HF/asset-transfer-basic/application-javascript
