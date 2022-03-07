@@ -3,6 +3,17 @@ MOD_PATH="./OPEN/MOD"
 TEST_NET_PATH="./HF/test-network"
 ORIGINAL_PATH="./OPEN/ORIGINAL"
 
+OPENactive = ls ./firstBoot.txt | wc -l
+
+if [OPENactive -eq 1]:
+then
+    echo "OPEN was not initialized. Exitin g."
+    exit -1
+fi
+
+rm ./HF/installPeerAndConfiguration.sh
+
+
 ############ CONFIGTX FOLDER
 cp ${TEST_NET_PATH}/configtx/configtx.yaml ${MOD_PATH}/configtx/configtx_MOD.yaml
 cp ${ORIGINAL_PATH}/configtx/configtx.yaml ${TEST_NET_PATH}/configtx/configtx.yaml

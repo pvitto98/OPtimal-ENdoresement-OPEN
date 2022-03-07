@@ -5,6 +5,13 @@ ORIGINAL_PATH="./OPEN/ORIGINAL"
 APP_PATH="./HF/asset-transfer-basic/application-javascript"
 CHAINCODE_PATH="./HF/asset-transfer-basic/chaincode-javascript"
 
+
+
+
+
+#######PEER BINARIES AND CONFIGURATION FILE
+cp ${MOD_PATH}/installPeerAndConfiguration.sh ./HF
+
 ############ CONFIGTX FOLDER
 cp ${TEST_NET_PATH}/configtx/configtx.yaml ${ORIGINAL_PATH}/configtx/configtx.yaml
 cp ${MOD_PATH}/configtx/configtx_MOD.yaml ${TEST_NET_PATH}/configtx/configtx.yaml
@@ -86,3 +93,5 @@ cp ${APP_PATH}/app.js ${ORIGINAL_PATH}/app.js
 cp ${MOD_PATH}/app_MOD.js ${APP_PATH}/app.js
 
 cp ${MOD_PATH}/saveOPENchanges.sh ${APP_PATH}
+
+cp ${MOD_PATH}/OPENactive.txt ./

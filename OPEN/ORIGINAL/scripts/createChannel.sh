@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# imports
+# imports  
 . scripts/envVar.sh
 . scripts/utils.sh
 
@@ -19,9 +19,7 @@ fi
 
 createChannelTx() {
 	set -x
-	#changed
-
-	configtxgen -profile AllOrgsChannel -outputCreateChannelTx ./channel-artifacts/${CHANNEL_NAME}.tx -channelID $CHANNEL_NAME
+	configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/${CHANNEL_NAME}.tx -channelID $CHANNEL_NAME
 	res=$?
 	{ set +x; } 2>/dev/null
   verifyResult $res "Failed to generate channel configuration transaction..."
@@ -68,12 +66,8 @@ joinChannel() {
 
 setAnchorPeer() {
   ORG=$1
-	infoln "setAnchorPeer --> $ORG org"
-  docker exec cli ./scripts/setAnchorPeer.sh $ORG $CHANNEL_NAME
+  docker exec cli ./scripts/setAnchorPeer.sh $ORG $CHANNEL_NAME 
 }
-
-infoln "ECCOCI SU CREATECHANNEL#####################################################################################"
-
 
 FABRIC_CFG_PATH=${PWD}/configtx
 
@@ -84,47 +78,21 @@ createChannelTx
 FABRIC_CFG_PATH=$PWD/../config/
 BLOCKFILE="./channel-artifacts/${CHANNEL_NAME}.block"
 
-NUM_ORG=8
-
 ## Create channel
 infoln "Creating channel ${CHANNEL_NAME}"
 createChannel
 successln "Channel '$CHANNEL_NAME' created"
 
-
-
 ## Join all the peers to the channel
-#infoln "Joining org1 peer to the channel..."
-#joinChannel 1
-#infoln "Joining org2 peer to the channel..."
-#joinChannel 2
-
-#####new
-
-#infoln "Joining org3 peer to the channel..."
-#joinChannel 3
-
-
-for i in $(seq 1 ${NUM_ORG}); do
-	infoln "Joining org$i peer to the channel..."
-	joinChannel $i
-done
+infoln "Joining org1 peer to the channel..."
+joinChannel 1
+infoln "Joining org2 peer to the channel..."
+joinChannel 2
 
 ## Set the anchor peers for each org in the channel
-#infoln "Setting anchor peer for org1..."
-#setAnchorPeer 1
-#infoln "Setting anchor peer for org2..."
-#setAnchorPeer 2
-
-#######NEW
-
-#infoln "Setting anchor peer for org3..."
-#setAnchorPeer 3
-
-for i in $(seq 1 ${NUM_ORG}); do
-	infoln "Setting anchor peer for org${i}..."
-	setAnchorPeer $i
-done
-
+infoln "Setting anchor peer for org1..."
+setAnchorPeer 1
+infoln "Setting anchor peer for org2..."
+setAnchorPeer 2
 
 successln "Channel '$CHANNEL_NAME' joined"

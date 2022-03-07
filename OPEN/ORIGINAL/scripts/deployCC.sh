@@ -282,107 +282,47 @@ chaincodeQuery() {
   fi
 }
 
-NUM_ORG=8
-
-
 ## package the chaincode
 packageChaincode
 
-
 ## Install chaincode on peer0.org1 and peer0.org2
-#infoln "Installing chaincode on peer0.org1..."
-#installChaincode 1
-#infoln "Install chaincode on peer0.org2..."
-#installChaincode 2
-
-#infoln "Install chaincode on peer0.org3..."
-#installChaincode 3
-
-for i in $(seq 1 ${NUM_ORG}); do
-  infoln "Installing chaincode on peer0.org$i..."
-  installChaincode $i
-done
-
+infoln "Installing chaincode on peer0.org1..."
+installChaincode 1
+infoln "Install chaincode on peer0.org2..."
+installChaincode 2
 
 ## query whether the chaincode is installed
-#queryInstalled 1
+queryInstalled 1
 
-for i in $(seq 1 ${NUM_ORG}); do
-  infoln "${i} QUERY"
-  queryInstalled $i
-done
-
-infoln "QUERY FINITE"
 ## approve the definition for org1
-#approveForMyOrg 1
-
-for i in $(seq 1 ${NUM_ORG}); do
-  approveForMyOrg $i
-done
+approveForMyOrg 1
 
 ## check whether the chaincode definition is ready to be committed
 ## expect org1 to have approved and org2 not to
-#checkCommitReadiness 1 "\"Org1MSP\": true" "\"Org2MSP\": false" "\"Org3MSP\": false"
-#checkCommitReadiness 2 "\"Org1MSP\": true" "\"Org2MSP\": false" "\"Org3MSP\": false"
-
-#checkCommitReadiness 3 "\"Org1MSP\": true" "\"Org2MSP\": false" "\"Org3MSP\": false"
-
+checkCommitReadiness 1 "\"Org1MSP\": true" "\"Org2MSP\": false"
+checkCommitReadiness 2 "\"Org1MSP\": true" "\"Org2MSP\": false"
 
 ## now approve also for org2
-#approveForMyOrg 2
+approveForMyOrg 2
 
 ## check whether the chaincode definition is ready to be committed
 ## expect them both to have approved
-#checkCommitReadiness 1 "\"Org1MSP\": true" "\"Org2MSP\": true" "\"Org3MSP\": false"
-#checkCommitReadiness 2 "\"Org1MSP\": true" "\"Org2MSP\": true" "\"Org3MSP\": false"
-#checkCommitReadiness 3 "\"Org1MSP\": true" "\"Org2MSP\": true" "\"Org3MSP\": false"
-
-## now approve also for org3
-#approveForMyOrg 3
-
-## check whether the chaincode definition is ready to be committed
-## expect them both to have approved
-#checkCommitReadiness 1 "\"Org1MSP\": true" "\"Org2MSP\": true" "\"Org3MSP\": true"
-#checkCommitReadiness 2 "\"Org1MSP\": true" "\"Org2MSP\": true" "\"Org3MSP\": true"
-#checkCommitReadiness 3 "\"Org1MSP\": true" "\"Org2MSP\": true" "\"Org3MSP\": true"
-
-## check whether the chaincode definition is ready to be committed
-## expect them all to have approved
-for i in $(seq 1 ${NUM_ORG}); do
-  checkCommitReadiness $i
-done
+checkCommitReadiness 1 "\"Org1MSP\": true" "\"Org2MSP\": true"
+checkCommitReadiness 2 "\"Org1MSP\": true" "\"Org2MSP\": true"
 
 ## now that we know for sure both orgs have approved, commit the definition
-for i in $(seq 1 ${NUM_ORG}); do
-  COM_PEERS="${COM_PEERS} $i"
-done
-commitChaincodeDefinition ${COM_PEERS}
+commitChaincodeDefinition 1 2
 
 ## query on both orgs to see that the definition committed successfully
-for i in $(seq 1 ${NUM_ORG}); do
-  queryCommitted $i
-done
-
-
-## now that we know for sure both orgs have approved, commit the definition
-#commitChaincodeDefinition 1 2 3
-
-## query on both orgs to see that the definition committed successfully
-#queryCommitted 1
-#queryCommitted 2
-#queryCommitted 3
-#queryCommitted 4
-
+queryCommitted 1
+queryCommitted 2
 
 ## Invoke the chaincode - this does require that the chaincode have the 'initLedger'
 ## method defined
 if [ "$CC_INIT_FCN" = "NA" ]; then
   infoln "Chaincode initialization is not required"
 else
-  for i in $(seq 1 ${NUM_ORG}); do
-    infoln "chaincodeInvokeInit ${i}"
-    chaincodeInvokeInit $i
-  done
+  chaincodeInvokeInit 1 2
 fi
 
 exit 0

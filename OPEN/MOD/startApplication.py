@@ -30,8 +30,8 @@ if __name__ == '__main__':
       saveTR = os.system('cp ./node_modules/fabric-network/lib/transaction.js ' + ORIGINAL_PATH + 'transaction.js ')
       cpyTR = os.system('cp ' + MOD_PATH + 'transaction_MOD.js ./node_modules/fabric-network/lib/transaction.js')
 
-      saveCC = os.system('cp ./../chaincode-javascript/lib/AssetTransfer.js ' + ORIGINAL_PATH + 'AssetTransfer.js ')
-      cpyCC = os.system('cp ' + MOD_PATH + 'AssetTransfer_MOD.js ./../chaincode-javascript/lib/AssetTransfer.js')
+      saveCC = os.system('cp ./../../chaincode-javascript/lib/assetTransfer.js ' + ORIGINAL_PATH + 'assetTransfer.js ')
+      cpyCC = os.system('cp ' + MOD_PATH + 'assetTransfer_MOD.js ./../../chaincode-javascript/lib/assetTransfer.js')
 
 
       rmFB= os.system('rm ./firstBoot.txt')
