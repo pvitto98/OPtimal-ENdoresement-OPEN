@@ -22,7 +22,7 @@ cp ${ORIGINAL_PATH}/configtx/configtx.yaml ${TEST_NET_PATH}/configtx/configtx.ya
 
 
 ########## CONFIGURATION FILES
-cp -R ${TEST_NET_PATH}/ ${MOD_PATH}/configurationFiles
+#cp -R ${TEST_NET_PATH}/ ${MOD_PATH}/configurationFiles
 rm -R ${TEST_NET_PATH}/configurationFiles
 
 ################
@@ -74,7 +74,7 @@ cp ${ORIGINAL_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml ${
 
 for i in {3..8}
 do
-  cp -r ${TEST_NET_PATH}/organizations/fabric-ca/ ${MOD_PATH}/organizations/fabric-ca/org${i}
+  cp -r ${TEST_NET_PATH}/organizations/fabric-ca/org${i} ${MOD_PATH}/organizations/fabric-ca/
   rm -R ${TEST_NET_PATH}/organizations/fabric-ca/org${i}
 done
 

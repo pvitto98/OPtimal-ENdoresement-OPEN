@@ -7,9 +7,9 @@ APP_PATH="./HF/asset-transfer-basic/application-javascript"
 CHAINCODE_PATH="./HF/asset-transfer-basic/chaincode-javascript"
 
 
-OPENactive=$(ls ./firstBoot.txt | wc -l)
+OPENactive=$(ls ./OPENactive.txt | wc -l)
 
-if [${OPENactive} -eq 1 ];
+if [ ${OPENactive} -eq 1 ];
 then
     echo "OPEN already initialized. Exiting."
     exit -1
