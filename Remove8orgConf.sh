@@ -1,3 +1,4 @@
+#!/bin/bash
 
 MOD_PATH="./OPEN/MOD"
 TEST_NET_PATH="./HF/test-network"
@@ -5,9 +6,9 @@ ORIGINAL_PATH="./OPEN/ORIGINAL"
 
 OPENactive = ls ./firstBoot.txt | wc -l
 
-if [OPENactive -eq 1]:
+if [OPENactive -ne 1 ]:
 then
-    echo "OPEN was not initialized. Exitin g."
+    echo "OPEN was not initialized. Exiting."
     exit -1
 fi
 
@@ -100,5 +101,8 @@ rm ${TEST_NET_PATH}/docker/.env
 cp ${APP_PATH}/app.js ${MOD_PATH}/app_MOD.js
 cp ${ORIGINAL_PATH}/app.js ${APP_PATH}/app.js
 
+
+
 rm ${APP_PATH}/startApplication.py
 rm ${APP_PATH}/saveOPENchanges.sh
+rm ${APP_PATH}/bootup.sh

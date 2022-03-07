@@ -1,3 +1,5 @@
+#!/bin/bash
+
 MOD_PATH="./OPEN/MOD"
 TEST_NET_PATH="./HF/test-network"
 ORIGINAL_PATH="./OPEN/ORIGINAL"

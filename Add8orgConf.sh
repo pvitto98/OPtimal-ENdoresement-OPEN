@@ -1,3 +1,4 @@
+#!/bin/bash
 
 MOD_PATH="./OPEN/MOD"
 TEST_NET_PATH="./HF/test-network"
@@ -93,5 +94,7 @@ cp ${APP_PATH}/app.js ${ORIGINAL_PATH}/app.js
 cp ${MOD_PATH}/app_MOD.js ${APP_PATH}/app.js
 
 cp ${MOD_PATH}/saveOPENchanges.sh ${APP_PATH}
+
+cp ${MOD_PATH}/bootup.sh ${APP_PATH}
 
 cp ${MOD_PATH}/OPENactive.txt ./
