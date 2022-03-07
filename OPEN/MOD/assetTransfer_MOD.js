@@ -100,7 +100,7 @@ class AssetTransfer extends Contract {
             Owner: owner,
             AppraisedValue: appraisedValue,
         };
-        return ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedAsset)));
+        return await ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedAsset)));
     }
 
     // DeleteAsset deletes an given asset from the world state.
@@ -109,7 +109,7 @@ class AssetTransfer extends Contract {
         if (!exists) {
             throw new Error(`The asset ${id} does not exist`);
         }
-        return ctx.stub.deleteState(id);
+        return await ctx.stub.deleteState(id);
     }
 
     // AssetExists returns true when asset with given ID exists in world state.
@@ -123,7 +123,7 @@ class AssetTransfer extends Contract {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
         asset.Owner = newOwner;
-        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+        return await ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
 
     // GetAllAssets returns all assets found in the world state.
