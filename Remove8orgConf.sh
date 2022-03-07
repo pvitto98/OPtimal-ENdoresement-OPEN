@@ -3,28 +3,29 @@
 MOD_PATH="./OPEN/MOD"
 TEST_NET_PATH="./HF/test-network"
 ORIGINAL_PATH="./OPEN/ORIGINAL"
-
-OPENactive=$(ls ./OPENactive.txt | wc -l)
-
-if [ ${OPENactive} -eq 0 ];
-then
-    echo "OPEN was not initialized. Exiting."
-    exit -1
-fi
-
+APP_PATH="./HF/asset-transfer-basic/application-javascript"
+#
+# OPENactive=$(ls ./OPENactive.txt | wc -l)
+#
+# if [ ${OPENactive} -eq 0 ];
+# then
+#     echo "OPEN was not initialized. Exiting."
+#     exit -1
+# fi
+#
 # rm ./HF/installPeerAndConfiguration.sh
 
 
-# ############ CONFIGTX FOLDER
+############ CONFIGTX FOLDER
 # cp ${TEST_NET_PATH}/configtx/configtx.yaml ${MOD_PATH}/configtx/configtx_MOD.yaml
 # cp ${ORIGINAL_PATH}/configtx/configtx.yaml ${TEST_NET_PATH}/configtx/configtx.yaml
-#
-#
-# ########### CONFIGURATION FILES
-# cp ${TEST_NET_PATH}/configurationFiles ${MOD_PATH}/configurationFiles
+
+
+########### CONFIGURATION FILES
+# cp -R ${TEST_NET_PATH}/configurationFiles ${MOD_PATH}/configurationFiles
 # rm -R ${TEST_NET_PATH}/configurationFiles
-#
-# ################
+
+################
 # cp ${TEST_NET_PATH}/hyperledgerScript.py ${MOD_PATH}/hyperledgerScript.py
 # rm ${TEST_NET_PATH}/hyperledgerScript.py
 #
@@ -33,10 +34,10 @@ fi
 #
 # cp ${TEST_NET_PATH}/network.sh ${MOD_PATH}/network.sh
 # cp ${ORIGINAL_PATH}/network.sh ${TEST_NET_PATH}/network.sh
-# #####################qua
-#
-# ################### SCRIPT FOLDER
-#
+#####################qua
+
+################### SCRIPT FOLDER
+
 # cp ${TEST_NET_PATH}/scripts/createChannel.sh ${MOD_PATH}//scripts/createChannel_MOD.sh
 # cp ${ORIGINAL_PATH}/scripts/createChannel.sh ${TEST_NET_PATH}/scripts/createChannel.sh
 #
@@ -64,24 +65,24 @@ fi
 # ############################### FABRIC-CA
 #
 #
-# ################### TO DOUBLE CHECK THE PORT NUMBER 7054
+################### TO DOUBLE CHECK THE PORT NUMBER 7054
 #
 # cp ${TEST_NET_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml ${MOD_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config_MOD.yaml
 # cp ${ORIGINAL_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml ${TEST_NET_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml
 #
 #
-#
-# for i in {3..8}
-# do
-#   cp ${TEST_NET_PATH}/organizations/fabric-ca/org${i} ${MOD_PATH}/organizations/fabric-ca/org${i}
-#   rm -R ${TEST_NET_PATH}/organizations/fabric-ca/org${i}
-# done
-#
+
+for i in {3..8}
+do
+  cp -r ${TEST_NET_PATH}/organizations/fabric-ca/org${i} ${MOD_PATH}/organizations/fabric-ca/org${i}
+  rm -R ${TEST_NET_PATH}/organizations/fabric-ca/org${i}
+done
+
 # cp ${TEST_NET_PATH}/organizations/fabric-ca/registerEnroll.sh ${MOD_PATH}/organizations/fabric-ca/registerEnroll_MOD.sh
 # cp ${ORIGINAL_PATH}/organizations/fabric-ca/registerEnroll.sh ${TEST_NET_PATH}/organizations/fabric-ca/registerEnroll.sh
-#
-#
-#
+
+
+
 #
 # ################################### DOCKER FOLDER
 # cp ${TEST_NET_PATH}/docker/docker-compose.yaml ${MOD_PATH}/docker/docker-compose.yaml
@@ -106,3 +107,6 @@ fi
 # rm ${APP_PATH}/startApplication.py
 # rm ${APP_PATH}/saveOPENchanges.sh
 # rm ${APP_PATH}/bootup.sh
+
+# rm ${APP_PATH}/results
+# rm ${APP_PATH}/wallet

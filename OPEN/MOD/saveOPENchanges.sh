@@ -17,4 +17,4 @@ cp ${APP_PATH}/node_modules/fabric-network/lib/transaction.js ${MOD_PATH}/transa
 cp ${ORIGINAL_PATH}/transaction.js ${APP_PATH}/node_modules/fabric-common/lib/transaction.js
 
 cp ${CHAINCODE_PATH}/lib/assetTransfer.js ${MOD_PATH}/assetTransfer_MOD.js
-cp ${ORIGINAL_PATH}/assetTransfer.js ${CHAINCODE_PATH}/lib/AssetTransfer.js
+cp ${ORIGINAL_PATH}/assetTransfer.js ${CHAINCODE_PATH}/lib/assetTransfer.js

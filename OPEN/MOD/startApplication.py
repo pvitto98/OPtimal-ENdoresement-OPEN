@@ -10,7 +10,7 @@ ORIGINAL_PATH = "../../../OPEN/ORIGINAL/"
 if __name__ == '__main__':
 
 
-  npmInstall = os.system('npm install' + DONTSHOWOUTPUT)
+  npmInstall = os.system('npm install' )
 
   bootup = os.system('./bootup.sh')
 

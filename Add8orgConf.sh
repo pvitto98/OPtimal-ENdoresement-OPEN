@@ -7,7 +7,7 @@ APP_PATH="./HF/asset-transfer-basic/application-javascript"
 CHAINCODE_PATH="./HF/asset-transfer-basic/chaincode-javascript"
 
 
-OPENactive = $(ls ./firstBoot.txt | wc -l)
+OPENactive=$(ls ./firstBoot.txt | wc -l)
 
 if [${OPENactive} -eq 1 ]:
 then
@@ -106,3 +106,5 @@ cp ${MOD_PATH}/bootup.sh ${APP_PATH}
 cp ${MOD_PATH}/OPENactive.txt ./
 
 cp ./OPEN/MOD/firstBoot.txt ./HF/asset-transfer-basic/application-javascript
+
+mkdir ${APP_PATH}/results

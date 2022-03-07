@@ -799,14 +799,14 @@ class DiscoveryHandler extends ServiceHandler {
 
     let DELAYFile
 
-    //#### FILE NAMES
-    if (MODE[0] == "OPEN"){
-      DELAYFile = "./results/OPENEndTimesT"+T+"eps"+eps+"_"+timestamp+".txt";
-    } else if (MODE[0] == "RND"){
-      DELAYFile = "./results/RNDHalfEndTimes_"+timestamp+".txt";
-    } else if (MODE[0] == "ORIGINAL"){
-      DELAYFile = "./results/NormalEndTimes_"+timestamp+".txt";
-    }
+    // //#### FILE NAMES
+    // if (MODE[0] == "OPEN"){
+    //   DELAYFile = "./results/OPENEndTimesT"+T+"eps"+eps+"_"+timestamp+".txt";
+    // } else if (MODE[0] == "RND"){
+    //   DELAYFile = "./results/RNDHalfEndTimes_"+timestamp+".txt";
+    // } else if (MODE[0] == "ORIGINAL"){
+    //   DELAYFile = "./results/NormalEndTimes_"+timestamp+".txt";
+    // }
 
 
     if (tmpDelays1.length != 0){ // this condition is wrong
@@ -825,9 +825,9 @@ class DiscoveryHandler extends ServiceHandler {
       avg = sumTime/count;
 
       console.log("Ave. T: " + avg +" # Layout end. T: "+timeMeasured+" # Min end. delay: "+minDelay);
-      fs.appendFile(DELAYFile, JSON.stringify(endorse_time) + '\n' , function(err) {if(err) {return console.log(err);}});
+      // fs.appendFile(DELAYFile, JSON.stringify(endorse_time) + '\n' , function(err) {if(err) {return console.log(err);}});
     } else {
-      fs.appendFile(DELAYFile, "No responses were recorded!" + '\n');
+      // fs.appendFile(DELAYFile, "No responses were recorded!" + '\n');
       console.log("No responses were recorded!")
     }
 
