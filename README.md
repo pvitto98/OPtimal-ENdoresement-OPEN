@@ -1,12 +1,5 @@
 # OPtimal-ENdoresement-OPEN for HF 2.2
 
-STEP 0: GIT CHECKOUT HF VERSION TO RELEASE-2.2 
-STEP 1 : IF NEEDED, INSTALL PEER BINARY AND CONFIGURATION FILES. YOU CAN DO IT BY COPYING installPeerAndConfiguration.sh FILE INTO HF FOLDER AND RUN IT WITH
-	sudo chmod +x installPeerAndConfiguration.sh
-	./installPeerAndConfiguration.sh
-
-# OPtimal-ENdoresement-OPEN for HF 2.2
-
 ## Installation
 
 ###STEP 0: CLONE THE PROJECT (git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git --recursive). THE RECURSVIE FLAG IS MANDATORY TO DOWNLOAD HF SUBMODULE.
@@ -35,26 +28,3 @@ STEP 1 : IF NEEDED, INSTALL PEER BINARY AND CONFIGURATION FILES. YOU CAN DO IT B
 
 
 
-
-## Usage
-
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
