@@ -13,6 +13,7 @@ then
     exit -1
 fi
 
+rm ./OPENactive.txt
 rm ./HF/installPeerAndConfiguration.sh
 
 
