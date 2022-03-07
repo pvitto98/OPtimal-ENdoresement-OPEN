@@ -2,6 +2,8 @@
 
 ## Installation
 
+FIRST RULE: DON'T EVER COMMIT OR PUSH HF FOLDER.
+
 ###STEP 0: CLONE THE PROJECT (git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git --recursive). THE RECURSVIE FLAG IS MANDATORY TO DOWNLOAD HF SUBMODULE.
 ###STEP 0.1: ENTER HF FOLDER AND CHECKOUT VERSION TO 2.2 (git checkout release-2.2)
 
