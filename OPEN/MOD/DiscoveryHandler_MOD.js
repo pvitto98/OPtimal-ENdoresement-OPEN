@@ -26,7 +26,7 @@ const { performance } = require('perf_hooks');
  * ["RND"]      --> RND_HALF
  * ["RND", N]   --> RND_N
  */
-let MODE = ["RND",7]
+let MODE = ["OPEN"]
 
 //#### OTHER VALUES
 const NUM_ORG = 8;
@@ -797,13 +797,15 @@ class DiscoveryHandler extends ServiceHandler {
     ///// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV /////
     let tmpDelays1 = extractDelays(endorse_time).filter((value) => { if(parseFloat(value)!= -1) { return value; }});
 
+    let DELAYFile
+
     //#### FILE NAMES
     if (MODE[0] == "OPEN"){
-      const DELAYFile = "./results/OPENEndTimesT"+T+"eps"+eps+"_"+timestamp+".txt";
+      DELAYFile = "./results/OPENEndTimesT"+T+"eps"+eps+"_"+timestamp+".txt";
     } else if (MODE[0] == "RND"){
-      const DELAYFile = "./results/RNDHalfEndTimes_"+timestamp+".txt";
+      DELAYFile = "./results/RNDHalfEndTimes_"+timestamp+".txt";
     } else if (MODE[0] == "ORIGINAL"){
-      const DELAYFile = "./results/NormalEndTimes_"+timestamp+".txt";
+      DELAYFile = "./results/NormalEndTimes_"+timestamp+".txt";
     }
 
 
