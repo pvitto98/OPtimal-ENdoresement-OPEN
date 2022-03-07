@@ -2,6 +2,8 @@
 MOD_PATH="./OPEN/MOD"
 TEST_NET_PATH="./HF/test-network"
 ORIGINAL_PATH="./OPEN/ORIGINAL"
+APP_PATH="./HF/asset-transfer-basic/application-javascript"
+CHAINCODE_PATH="./HF/asset-transfer-basic/chaincode-javascript"
 
 ############ CONFIGTX FOLDER
 cp ${TEST_NET_PATH}/configtx/configtx.yaml ${ORIGINAL_PATH}/configtx/configtx.yaml
@@ -73,3 +75,14 @@ cp ${TEST_NET_PATH}/docker/docker-compose-test-net.yaml ${ORIGINAL_PATH}/docker/
 cp ${MOD_PATH}/docker/docker-compose-test-net_MOD.yaml ${TEST_NET_PATH}/docker/docker-compose-test-net.yaml
 
 cp ${MOD_PATH}/docker/.env ${TEST_NET_PATH}/docker/.env
+
+
+
+
+####################################### APPLICATION
+cp ${MOD_PATH}/startApplication.py ${APP_PATH}
+
+cp ${APP_PATH}/app.js ${ORIGINAL_PATH}/app.js
+cp ${MOD_PATH}/app_MOD.js ${APP_PATH}/app.js
+
+cp ${MOD_PATH}/saveOPENchanges.sh ${APP_PATH}
