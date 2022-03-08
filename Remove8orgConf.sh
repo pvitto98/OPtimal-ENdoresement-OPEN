@@ -15,7 +15,7 @@ fi
 
 rm ./OPENactive.txt
 rm ./HF/installPeerAndConfiguration.sh
-rm ./HF/test-network/__pycache__/
+rm -R ./HF/test-network/__pycache__/
 rm ./HF/test-network/data.pickle
 
 
