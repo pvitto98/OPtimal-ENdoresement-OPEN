@@ -1,6 +1,8 @@
 # OPtimal-ENdoresement-OPEN for HF 2.2
 
-## Installation 
+## MOD Installation 
+
+To install the MOD inside the HF network you must follow these steps:
 
 * Step 0: Clone the project (git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git --recursive). The recursive flag is mandatory to download the HF submodule.
 
@@ -15,8 +17,10 @@
 
 Select 
 
-``` 1. Yes, for the application. Wait for it to end and then press 0 to close the program.```
+``` 1. Yes, for the application.```
 
+ Wait for it to end and then press 0 to close the program.
+ 
 * Step 4: Go to asset-transfer-basic/application-javascript and be sure that there's a file called FirstBoot.txt. If it's not there something could be gone wrong.
   Run startScript.py (through python3 command) and wait for the application to finish.
 
