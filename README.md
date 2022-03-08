@@ -25,11 +25,11 @@ You can finally open the project on a file editor since all the important files 
 
 ## Before committing to GitHub
 
-* Step 1: Before committing there are some mandatory steps
-* Step 2: Close the editor
-* Step 3: Bring network down by using ./network.sh down in test-network.
-* Step 4: Run ./saveOPENchanges.sh in asset-transfer-basic/application-javascript.
-* Step 5: Run ./Remove8OrgConf.sh in the main folder.
+Before committing there are some mandatory steps
+* Step 1: Close the editor
+* Step 2: Bring network down by using ./network.sh down in test-network.
+* Step 3: Run ./saveOPENchanges.sh in asset-transfer-basic/application-javascript.
+* Step 4: Run ./Remove8OrgConf.sh in the main folder.
 
 Be sure to run Add8OrgConf.sh and Remove8OrgConf.sh In couple or things will get messed up. by using these commands no modified file will be public on GitHub.
 
