@@ -4,7 +4,11 @@
 
 To install the MOD inside the HF network you must follow these steps:
 
-* Step 0: Clone the project (git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git --recursive). The recursive flag is mandatory to download the HF submodule.
+* Step 0: Clone the project 
+
+```git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git --recursive```
+
+The recursive flag is mandatory to download the HF submodule.
 
 * Step 0.1: Enter hf folder and checkout version to 2.2 (git checkout release-2.2)
 
