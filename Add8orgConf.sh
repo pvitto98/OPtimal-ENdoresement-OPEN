@@ -15,11 +15,13 @@ then
     exit -1
 fi
 
+mkdir ${ORIGINAL_PATH}
 
 #######PEER BINARIES AND CONFIGURATION FILE
 cp ${MOD_PATH}/installPeerAndConfiguration.sh ./HF
 
 ############ CONFIGTX FOLDER
+mkdir ${ORIGINAL_PATH}/configtx
 cp ${TEST_NET_PATH}/configtx/configtx.yaml ${ORIGINAL_PATH}/configtx/configtx.yaml
 cp ${MOD_PATH}/configtx/configtx_MOD.yaml ${TEST_NET_PATH}/configtx/configtx.yaml
 
@@ -33,6 +35,8 @@ cp ${TEST_NET_PATH}/network.sh ${ORIGINAL_PATH}/network.sh
 cp ${MOD_PATH}/network_MOD.sh ${TEST_NET_PATH}/network.sh
 
 #################### SCRIPT FOLDER
+
+mkdir ${ORIGINAL_PATH}/scripts
 
 cp ${TEST_NET_PATH}/scripts/createChannel.sh ${ORIGINAL_PATH}/scripts/createChannel.sh
 cp ${MOD_PATH}/scripts/createChannel_MOD.sh ${TEST_NET_PATH}/scripts/createChannel.sh
@@ -49,6 +53,8 @@ cp ${MOD_PATH}/scripts/deployCC_MOD.sh ${TEST_NET_PATH}/scripts/deployCC.sh
 
 ################### ORGANIZATIONS FOLDER
 
+mkdir ${ORIGINAL_PATH}/organizations
+
 cp ${TEST_NET_PATH}/organizations/ccp-generate.sh ${ORIGINAL_PATH}/organizations/ccp-generate.sh
 cp ${MOD_PATH}/organizations/ccp-generate_MOD.sh ${TEST_NET_PATH}/organizations/ccp-generate.sh
 
@@ -64,6 +70,9 @@ done
 
 
 ################### TO DOUBLE CHECK THE PORT NUMBER 7054
+mkdir ${ORIGINAL_PATH}/organizations/fabric-ca
+mkdir ${ORIGINAL_PATH}/organizations/fabric-ca/org2
+
 cp ${TEST_NET_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml ${ORIGINAL_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml
 cp ${MOD_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config_MOD.yaml  ${TEST_NET_PATH}/organizations/fabric-ca/org2/fabric-ca-server-config.yaml
 
@@ -80,6 +89,8 @@ cp ${MOD_PATH}/organizations/fabric-ca/registerEnroll_MOD.sh  ${TEST_NET_PATH}/o
 
 
 # ################################### DOCKER FOLDER
+mkdir ${ORIGINAL_PATH}/docker
+
 cp ${MOD_PATH}/docker/docker-compose.yaml ${TEST_NET_PATH}/docker/docker-compose.yaml
 
 cp ${TEST_NET_PATH}/docker/docker-compose-ca.yaml ${ORIGINAL_PATH}/docker/docker-compose-ca.yaml
