@@ -13,7 +13,7 @@ To install the MOD inside the HF network you must follow these steps:
 
 * Step 2: if needed, install peer binary and configuration files. you can do it by executing the installPeerAndConfiguration.sh file into the HF folder 
 
-* Step 3: Start hf network by going to test-network and running hyperledgerScript.py SCRIPT (python3 hyperledgerScript.py). 
+* Step 3: Start hf network by going to test-network and running hyperledgerScript.py script (python3 hyperledgerScript.py). 
 
 Select 
 
