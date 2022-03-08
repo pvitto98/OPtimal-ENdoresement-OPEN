@@ -15,6 +15,9 @@ fi
 
 rm ./OPENactive.txt
 rm ./HF/installPeerAndConfiguration.sh
+rm ./HF/test-network/__pycache__/
+rm ./HF/test-network/data.pickle
+
 
 
 ########## CONFIGTX FOLDER
@@ -47,8 +50,10 @@ cp ${ORIGINAL_PATH}/scripts/envVar.sh ${TEST_NET_PATH}/scripts/envVar.sh
 
 cp ${TEST_NET_PATH}/scripts/setAnchorPeer.sh ${MOD_PATH}/scripts/setAnchorPeer_MOD.sh
 cp ${ORIGINAL_PATH}/scripts/setAnchorPeer.sh ${TEST_NET_PATH}/scripts/setAnchorPeer.sh
-#
-# #
+
+cp ${TEST_NET_PATH}/scripts/deployCC.sh ${MOD_PATH}/scripts/deployCC_MOD.sh
+cp ${ORIGINAL_PATH}/scripts/deployCC.sh ${TEST_NET_PATH}/scripts/deployCC.sh
+
 
 ################## ORGANIZATIONS FOLDER
 cp ${TEST_NET_PATH}/organizations/ccp-generate.sh ${MOD_PATH}/organizations/ccp-generate_MOD.sh
