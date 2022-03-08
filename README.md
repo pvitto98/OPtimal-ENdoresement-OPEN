@@ -10,8 +10,7 @@ To install the MOD inside the HF network you must follow these steps:
 
 The recursive flag is mandatory to download the HF submodule.
 
-* Step 0.1: Enter hf folder and checkout version to 2.2 (git checkout release-2.2)
-
+* Step 0.1: Enter hf folder and be sure that the version is 2.2.
 
 * Step 1 : Run Add8OrgConf.sh script. This will add the configuration for 8 organizations and some needed files for OPEN.
 
