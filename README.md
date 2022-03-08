@@ -2,38 +2,43 @@
 
 ## Installation 
 
-FIRST RULE: DON'T EVER COMMIT OR PUSH HF FOLDER.
-SECOND RULE: STEP 1 2 3 AND 5 ARE NEEDED ONLY WHEN YOU WANT TO PULL/PUSH THE PROJECT FROM GIT
+* Step 0: Clone the project (git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git --recursive). The recursive flag is mandatory to download the HF submodule.
 
-###STEP 0: CLONE THE PROJECT (git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git --recursive). THE RECURSVIE FLAG IS MANDATORY TO DOWNLOAD HF SUBMODULE.
-###STEP 0.1: ENTER HF FOLDER AND CHECKOUT VERSION TO 2.2 (git checkout release-2.2)
+* Step 0.1: Enter hf folder and checkout version to 2.2 (git checkout release-2.2)
 
 
-###STEP 1 : RUN Add8OrgConf.sh SCRIPT. THIS WILL ADD THE CONFIGURATION FOR 8 ORGANIZATION AND SOME NEEDED FILE FOR OPEN.
+* Step 1 : Run Add8OrgConf.sh script. This will add the configuration for 8 organizations and some needed files for OPEN.
 
-###STEP 1.1 : IF NEEDED, INSTALL PEER BINARY AND CONFIGURATION FILES. YOU CAN DO IT BY EXECUTING installPeerAndConfiguration.sh FILE INTO HF FOLDER 
+* Step 2: if needed, install peer binary and configuration files. you can do it by executing the installPeerAndConfiguration.sh file into the HF folder 
 
-###STEP 2: START HF NETWORK BY GOING TO TEST-NETWORK AND RUNNING hyperledgerScript.py SCRIPT (python3 hyperledgerScript.py). SELECT 1. YES, FOR THE APPLICATION. WAIT IT TO END AND THEN PRESS 0.
+* Step 3: Start hf network by going to test-network and running hyperledgerScript.py SCRIPT (python3 hyperledgerScript.py). 
 
-###STEP 3: GO TO ASSET-TRANSFER-BASIC/APPLICATION-JAVASCRIPT AND BE SURE THAT THERE'S A FILE CALLED FirstBoot.txt. IF IT'S NOT THERE SOMETHING COULD BE GONE WRONG. RUN startScript.py (THROUGH python3 COMMAND) AND WAIT THE APPLICATION TO FINISH.
+Select 
 
-################################################################ NOW YOU CODE AND TO BOOT UP THE APPLICATION YOU NEED JUST TO EXECUTE STARTAPPLICATION.PY.
+``` 1. Yes, for the application. Wait for it to end and then press 0 to close the program.```
 
-STEP 4
-#### NOW SINCE NOW IT'S LIKE THE NETWORK IS ALREADY MODIFIED. YOU CAN MODIFY FILE INSIDE THE HF FOLDER. ONLY NOW YOU CAN OPEN THE PROJECT ON A FILE EDITOR.
-
-###########################################################################
-
-### STEP 5: BEFORE COMMITTING THERE ARE SOME MANDATORY STEPS
-#### STEP 5.1: CLOSE THE EDITOR
-#### STEP 5.1: BRING NETWORK DOWN BY USING ./network.sh down IN TEST-NETWORK.
-#### STEP 5.1: RUN ./saveOPENchanges.sh IN ASSET-TRANSFER-BASIC/APPLICATION-JAVASCRIPT.
-#### STEP 5.2: RUN ./Remove8OrgConf.sh IN THE MAIN FOLDER.
+* Step 4: Go to asset-transfer-basic/application-javascript and be sure that there's a file called FirstBoot.txt. If it's not there something could be gone wrong.
+  Run startScript.py (through python3 command) and wait for the application to finish.
 
 
-### BE SURE TO RUN Add8OrgConf.sh AND Remove8OrgConf.sh IN COUPLE OR THINGS WILL GET MESSED UP. BY USING THESE COMMAND NO MODIFIED FILE WILL BE PUBLIC ON GITHUB
+You can finally open the project on a file editor since all the important files are copied inside the hf network. to boot up the application you need just to re-execute startapplication.py.
 
-#### IF AN ERROR LIKE THIS APPEARS (2022-03-07T14:31:52.633Z - error: [DiscoveryService]: send[mychannel] - Channel:mychannel received discovery error:access denied YOU NEED TO REMOVE WALLET FOLDER INSIDE ASSET-TRANSFER-BASIC
+## Before committing to GitHub
+
+* Step 1: Before committing there are some mandatory steps
+* Step 2: Close the editor
+* Step 3: Bring network down by using ./network.sh down in test-network.
+* Step 4: Run ./saveOPENchanges.sh in asset-transfer-basic/application-javascript.
+* Step 5: Run ./Remove8OrgConf.sh in the main folder.
+
+Be sure to run Add8OrgConf.sh and Remove8OrgConf.sh In couple or things will get messed up. by using these commands no modified file will be public on GitHub.
 
 
+## Additional infos
+
+If an error like  
+
+```- error: [DiscoveryService]: send[mychannel] - Channel:mychannel received discovery error:access denied  ```
+
+appears you need to remove the wallet folder inside asset-transfer-basic
 
