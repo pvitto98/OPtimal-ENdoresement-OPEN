@@ -4,9 +4,7 @@
 
 To install the MOD inside the HF network you must follow these steps:
 
-* Step 0: Clone the project 
-
-```git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git ```
+* Step 0: Clone the project using ```git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git ```.
 
 * Step 1: Run ```getReady.sh``` script. This will download Hyperledger Fabric(HF) v2.2 and all the needed binaries.
 
