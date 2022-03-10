@@ -6,15 +6,11 @@ To install the MOD inside the HF network you must follow these steps:
 
 * Step 0: Clone the project 
 
-```git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git --recursive```
+```git clone https://github.com/pvitto98/OPtimal-ENdoresement-OPEN.git ```
 
-The recursive flag is mandatory to download the HF submodule.
+* Step 1: Run the getReady.sh script. This will download HF and all the needed binaries.
 
-* Step 0.1: Enter HF folder and be sure that the version is 2.2.
-
-* Step 1 : Run Add8OrgConf.sh script. This will add the configuration for 8 organizations and some needed files for OPEN.
-
-* Step 2: if needed, install peer binary and configuration files. you can do it by executing the installPeerAndConfiguration.sh file into the HF folder 
+* Step 2 : Run Add8OrgConf.sh script. This will add the configuration for 8 organizations and some needed files for OPEN.
 
 * Step 3: Start hf network by going to test-network and running hyperledgerScript.py script (python3 hyperledgerScript.py). 
 
