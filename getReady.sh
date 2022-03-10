@@ -3,11 +3,8 @@
 sudo apt update && sudo apt -y upgrade
 sudo systemctl start docker && sudo systemctl enable docker && sudo usermod -a -G docker $(whoami)
 
-
 curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.2 1.4.9
 
-
-#( cd fabric-samples && chmod 777 installPeerAndConfiguration.sh && sudo ./installPeerAndConfiguration.sh 2.2.2 1.4.9 )
 export PATH=$(pwd)/OPtimal-ENdoresement-OPEN/fabric-samples/bin:$PATH
 
 ( cd fabric-samples && rm -rf asset-transfer-abac/ asset-transfer-events/ asset-transfer-ledger-queries/ )
