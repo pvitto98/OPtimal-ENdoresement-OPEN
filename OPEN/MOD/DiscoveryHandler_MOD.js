@@ -26,7 +26,7 @@ const { performance } = require('perf_hooks');
  * ["RND"]      --> RND_HALF
  * ["RND", N]   --> RND_N
  */
-let MODE = ["OPEN"]
+let MODE = ["RND",3]
 
 //#### OTHER VALUES
 const NUM_ORG = 8;
@@ -708,6 +708,8 @@ class DiscoveryHandler extends ServiceHandler {
 			if (layout_results.success) {
         // make sure all responses have the same endorsement read/write set
 				//double check -->errors
+        console.log("results.endorsements:")
+        console.log(results.endorsements)
 				if (this.compareProposalResponseResults(layout_results.endorsements)) {
 					logger.debug('%s - layout plan %s completed successfully', method, layout_index);
 					results.endorsements = layout_results.endorsements;

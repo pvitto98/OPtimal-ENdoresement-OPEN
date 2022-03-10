@@ -1,10 +1,10 @@
 #!/bin/bash
 
 MOD_PATH="./OPEN/MOD"
-TEST_NET_PATH="./HF/test-network"
+TEST_NET_PATH="./fabric-samples/test-network"
 ORIGINAL_PATH="./OPEN/ORIGINAL"
-APP_PATH="./HF/asset-transfer-basic/application-javascript"
-CHAINCODE_PATH="./HF/asset-transfer-basic/chaincode-javascript"
+APP_PATH="./fabric-samples/asset-transfer-basic/application-javascript"
+CHAINCODE_PATH="./fabric-samples/asset-transfer-basic/chaincode-javascript"
 
 
 OPENactive=$(ls ./OPENactive.txt | wc -l)
@@ -18,7 +18,7 @@ fi
 mkdir ${ORIGINAL_PATH}
 
 #######PEER BINARIES AND CONFIGURATION FILE
-cp ${MOD_PATH}/installPeerAndConfiguration.sh ./HF
+#cp ${MOD_PATH}/installPeerAndConfiguration.sh ./HF
 
 ############ CONFIGTX FOLDER
 mkdir ${ORIGINAL_PATH}/configtx
@@ -116,6 +116,6 @@ cp ${MOD_PATH}/bootup.sh ${APP_PATH}
 
 cp ${MOD_PATH}/OPENactive.txt ./
 
-cp ./OPEN/MOD/firstBoot.txt ./HF/asset-transfer-basic/application-javascript
+cp ./OPEN/MOD/firstBoot.txt ${APP_PATH}
 
 mkdir ${APP_PATH}/results

@@ -19,41 +19,6 @@ class AssetTransfer extends Contract {
                 Owner: 'Tomoko',
                 AppraisedValue: 300,
             },
-            {
-                ID: 'asset2',
-                Color: 'red',
-                Size: 5,
-                Owner: 'Brad',
-                AppraisedValue: 400,
-            },
-            {
-                ID: 'asset3',
-                Color: 'green',
-                Size: 10,
-                Owner: 'Jin Soo',
-                AppraisedValue: 500,
-            },
-            {
-                ID: 'asset4',
-                Color: 'yellow',
-                Size: 10,
-                Owner: 'Max',
-                AppraisedValue: 600,
-            },
-            {
-                ID: 'asset5',
-                Color: 'black',
-                Size: 15,
-                Owner: 'Adriana',
-                AppraisedValue: 700,
-            },
-            {
-                ID: 'asset6',
-                Color: 'white',
-                Size: 15,
-                Owner: 'Michel',
-                AppraisedValue: 800,
-            },
         ];
 
         for (const asset of assets) {
@@ -72,6 +37,8 @@ class AssetTransfer extends Contract {
             Owner: owner,
             AppraisedValue: appraisedValue,
         };
+        //I ADDED THE AWAIT. IT WAS MISSING. IF THE PEER LOG GIVES YOU PUTSTATE ERROR MISSING CONTEXT ADD AWAIT IN FRONT OF THE CONTRACT FUNCTION.
+        //IT IS A CONCURRENCY PROBLEM.
         await ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
         return JSON.stringify(asset);
     }
@@ -100,7 +67,7 @@ class AssetTransfer extends Contract {
             Owner: owner,
             AppraisedValue: appraisedValue,
         };
-        return await ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedAsset)));
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedAsset)));
     }
 
     // DeleteAsset deletes an given asset from the world state.
@@ -109,7 +76,7 @@ class AssetTransfer extends Contract {
         if (!exists) {
             throw new Error(`The asset ${id} does not exist`);
         }
-        return await ctx.stub.deleteState(id);
+        return ctx.stub.deleteState(id);
     }
 
     // AssetExists returns true when asset with given ID exists in world state.
@@ -123,7 +90,7 @@ class AssetTransfer extends Contract {
         const assetString = await this.ReadAsset(ctx, id);
         const asset = JSON.parse(assetString);
         asset.Owner = newOwner;
-        return await ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
     }
 
     // GetAllAssets returns all assets found in the world state.

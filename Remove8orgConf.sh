@@ -1,9 +1,9 @@
 #!/bin/bash
 
 MOD_PATH="./OPEN/MOD"
-TEST_NET_PATH="./HF/test-network"
+TEST_NET_PATH="./fabric-samples/test-network"
 ORIGINAL_PATH="./OPEN/ORIGINAL"
-APP_PATH="./HF/asset-transfer-basic/application-javascript"
+APP_PATH="./fabric-samples/asset-transfer-basic/application-javascript"
 
 OPENactive=$(ls ./OPENactive.txt | wc -l)
 
@@ -14,9 +14,9 @@ then
 fi
 
 rm ./OPENactive.txt
-rm ./HF/installPeerAndConfiguration.sh
-rm -R ./HF/test-network/__pycache__/
-rm ./HF/test-network/data.pickle
+#rm ./HF/installPeerAndConfiguration.sh
+rm -R ./fabric-samples/test-network/__pycache__/
+rm ./fabric-samples/test-network/data.pickle
 
 
 
