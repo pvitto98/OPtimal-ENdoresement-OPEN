@@ -473,11 +473,11 @@ def getCleanSubProcessOutput(cmd):
 def timestamp():
     return datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
-def insertTransactionFunction(idAsset,threadStartTimes,threadFinishTimes):
+def insertTransactionFunction(idAsset,threadStartTimes,threadFinishTimes, R):
     # print("index: " + str(idAsset))
     # print("len: " + str(len(threadStartTimes)))
     threadStartTimes[idAsset] = datetime.datetime.now()
-    initTransaction = os.system('sudo ./peerTX.sh ' + str(ISSUER) + ' insert asset'+ str(idAsset) +' 1 1 1 '+ DONTSHOWOUTPUT )
+    initTransaction = os.system('sudo ./peerTX.sh ' + str(ISSUER) + ' insert asset'+ str(R) + "_"+ str(idAsset) +' 1 1 1 '+ DONTSHOWOUTPUT )
     threadFinishTimes[idAsset] = datetime.datetime.now()
 
 
@@ -838,7 +838,7 @@ def generate_offeredLoad_throughput_graph(measurations):
     plt.plot(list(map(lambda n: n.setRate,measurations)),list(map(lambda n: n.offeredLoad,measurations)),'--',linewidth=2 , color=col[1], label='Offered Load[tx/s]' )
 
     # plt.plot(list(map(lambda n: n.setRate,measurations)),list(map(lambda n: n.throughput,measurations)),'--',linewidth=2 , color=col[2], label="Throughput[tx/s]" )
-    a= 8
+    a= 12
 
     plt.xlabel('Set Rate [tx/s]')
     plt.ylim(ymin=0, ymax=a)
@@ -876,12 +876,12 @@ def generate_offeredLoad_throughput_graph(measurations):
     plt.clf()
 
 
-    plt.plot(list(map(lambda n: n.offeredLoad,measurations)),list(map(lambda n: n.CPUoccupation,measurations)),'--',linewidth=2 , color=col[1], label="CPU consumption [%]" )
-    plt.plot(list(map(lambda n: n.offeredLoad,measurations)),list(map(lambda n: n.RAMoccupation,measurations)),'--',linewidth=2 , color=col[2], label="RAM consumption [%]" )
+    plt.plot(list(map(lambda n: n.offeredLoad,measurations)),list(map(lambda n: float(n.CPUoccupation),measurations)),'--',linewidth=2 , color=col[1], label="CPU consumption [%]" )
+    plt.plot(list(map(lambda n: n.offeredLoad,measurations)),list(map(lambda n: float(n.RAMoccupation),measurations)),'--',linewidth=2 , color=col[2], label="RAM consumption [%]" )
 
 
     plt.xlabel('Offered Load [tx/s]')
-    plt.ylim(ymin=0, ymax=a)
+    plt.ylim(ymin=0, ymax=100)
     plt.ylabel('Occupation [%]')
     # plt.title("Periodic Process")
     plt.legend(loc='upper left')
@@ -946,7 +946,7 @@ def measure_stat_uniform(R,seconds):
         for a in range(0, R*seconds):
                  start  = datetime.datetime.now()
                  if THREADS:
-                    x = threading.Thread(target=insertTransactionFunction, args=(a,threadStartTimes,threadFinishTimes))
+                    x = threading.Thread(target=insertTransactionFunction, args=(a,threadStartTimes,threadFinishTimes,R))
                     x.start()
                     if (a == R*seconds - 1):
                          finishSpawningTime = datetime.datetime.now()
@@ -963,7 +963,7 @@ def measure_stat_uniform(R,seconds):
                                     preJoined = preJoined + 1
 
                  else:
-                    insertTransactionFunction(a)
+                    insertTransactionFunction(a,R)
 
 
 
@@ -1032,9 +1032,9 @@ def measure_stat_uniform(R,seconds):
              log = str(ps.communicate()[0])
              logs.append(log)
 
-        if THREADS:
-                x = threading.Thread(target=deleteTransactionsFunction, args=[R,seconds, ])
-                x.start()
+        # if THREADS:
+        #         x = threading.Thread(target=deleteTransactionsFunction, args=[R,seconds, ])
+        #         x.start()
 
         for i in range(1,NUM_ORG+1):
 
@@ -1075,40 +1075,6 @@ def measure_stat_uniform(R,seconds):
 
              sum = 0
 
-            #  bins = range(-1,500, 1)
-            #  pltBins = range(0, len(responses), 1)
-            #  arr = plt.hist(responses, 20 , histtype="barstacked")
-            #  plt.title("peer0.org"+str(i)+".example.com")
-            #  plt.xlabel("Service Time [ms]", fontsize = 7)
-            #  plt.ylabel("Count", fontsize = 7)
-            #  plt.figtext(.7, .8, "Avg = " +str("{:.2f}".format(average)) + "ms")
-            #  plt.savefig("serviceStatsOutput/"+folderName+"/org"+str(i)+"hist.jpeg")
-            #  plt.clf()
-            #
-            #  bins = range(0,50, 1)
-            #  arr = plt.hist(responses, bins , histtype="barstacked")
-            #  plt.title("peer0.org"+str(i)+".example.com")
-            #  plt.xlabel("Service Time [ms]", fontsize = 7)
-            #  plt.ylabel("Count", fontsize = 7)
-            #  plt.savefig("serviceStatsOutput/"+folderName+"/org"+str(i)+"hist_noOutliers.jpeg")
-            #  plt.clf()
-            #  #media_mobile = []
-            #  #media_mobile = moving_average(responses,int(R))
-            #  #last = media_mobile[len(media_mobile)-1]
-            #  #for i in range(0,len(responses) - len(media_mobile)):
-            # #      media_mobile = np.append(media_mobile,[last])
-            #  #plt.plot( pltBins, responses, pltBins, media_mobile)
-            #
-            #  plt.plot( pltBins, responses)
-            #  plt.title("peer0.org"+str(i)+".example.com")
-            #  plt.xlabel("Tx Number", fontsize = 7)
-            #  plt.ylabel("Service Time [ms]", fontsize = 7)
-            #  plt.savefig("serviceStatsOutput/"+folderName+"/org"+str(i)+"plot.jpeg")
-            #  plt.clf()
-            #  responses.clear()
-            #  committedBlocks.clear()
-            #  plt.clf()
-
         sum = 0
         for value in CPUoccupation:
                  sum = sum + value
@@ -1130,28 +1096,13 @@ def measure_stat_uniform(R,seconds):
         print("CPU AVERAGE: " + str(averageCPUoccupation))
         print("RAM AVERAGE: " + str(averageRAMoccupation))
 
-        # print("startTime")
-        # for value in threadStartTimes:
-        #      print(str(value))
-        #
-        # print("min start time" + str(min(threadStartTimes)))
-        #
-        # print("endTime")
-        # for value in threadFinishTimes:
-        #      print(str(value))
-        #
-        # print("max end time" + str(max(threadFinishTimes)))
-
-        # print("Finished calculating images!" )
-
-        #print("Finished. The output is in "+ folderName +" folder.")
 
         print("Cleaning Environment ...", end="" )
 
-        if THREADS:
-             x.join()
-        else:
-             deleteTransactionsFunction(R,id)
+        # if THREADS:
+        #      x.join()
+        # else:
+        #      deleteTransactionsFunction(R,id)
 
         print("....done." )
 
@@ -1196,11 +1147,11 @@ def measure_stat_poisson(R,seconds):
          #    threadFinishTimes.append(None)
 
 
-         print("totalTransactions: "+ str(totalTransactions))
+         #print("totalTransactions: "+ str(totalTransactions))
          # threadStartTimes = [None]*(totalTransactions)
          # threadFinishTimes = [None]*(totalTransactions)
 
-         print("len:" + str(len(threadStartTimes)))
+        # print("len:" + str(len(threadStartTimes)))
              # print(str(value), end=" ")
          # poissonBins = range(0, len(transactionDistribution), 1)
          # plt.bar(poissonBins, transactionDistribution, width=1, edgecolor="black", linewidth=0.5)
@@ -1228,7 +1179,7 @@ def measure_stat_poisson(R,seconds):
 
                      # res = executor.map(poissonInsertTransactionFunction,range(txId,txId+times))
                      if (second == seconds-1):
-                                print("finished spawning")
+                                #print("finished spawning")
                                 finishSpawningTime = datetime.datetime.now()
                      for result in executor.map(poissonInsertTransactionFunction,range(txId,txId+times)):
 	                        results.append(result)

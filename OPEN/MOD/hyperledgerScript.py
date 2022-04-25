@@ -129,7 +129,7 @@ if __name__ == '__main__':
           HFBootDown = os.system('./network.sh down')
           HFBootup = os.system('./network.sh up createChannel -c mychannel -ca')
           HFCreateChannel = os.system('./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript/ -ccl javascript')
-          
+
 
 
 
@@ -146,17 +146,15 @@ if __name__ == '__main__':
 
       elif (int(val) == 3 ):
           print("")
-          print("You decided the experimental launch.")
-          # HFBootDown = os.system('./network.sh down')
-          # HFBootup = os.system('./network.sh up createChannel -c mychannel -ca')
-          # HFCreateChannel = os.system('./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript/ -ccl javascript')
-
-          containers = generateContainerBridgeInfoFile_SmartContract()
+          print("You decided to use caliper.")
+          HFBootDown = os.system('./network.sh down')
+          HFBootup = os.system('./network.sh up createChannel')
+          HFCreateChannel = os.system('./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript/ -ccl javascript')
+          containers = generateContainerBridgeInfoFile()
           for container in containers:
               print(container.toString())
-          generateNetworkConf(containers, MODE)
+          #generateNetworkConf(containers, MODE)
 
-          pingTestDelays(containers)
 
           finished=True
 
@@ -228,19 +226,19 @@ if __name__ == '__main__':
               cmd = "mkdir serviceStatsOutput/" + folderName
 
               createFolderCommand = getCleanSubProcessOutput(cmd)
-              # print("UNIFORM MEASURATION")
-              # uniformMeasurations = []
-              #
-              # with open("serviceStatsOutput/"+folderName+"/uniformMeasurations.txt", 'a') as f:
-              #     for i in range(1,maxR,1):
-              #         print("--------------------->" +str(i) )
-              #         a = measure_stat_uniform(i,seconds)
-              #         print(a.toString())
-              #         uniformMeasurations.append(a)
-              #         f.write(a.toString())
-              #         time.sleep(60)
+              print("UNIFORM MEASURATION")
+              uniformMeasurations = []
 
-               # e.g. double each n
+              with open("serviceStatsOutput/"+folderName+"/uniformMeasurations.txt", 'a') as f:
+                  for i in range(1,maxR,1):
+                      print("--------------------->" +str(i) )
+                      a = measure_stat_uniform(i,seconds)
+                      print(a.toString())
+                      uniformMeasurations.append(a)
+                      f.write(a.toString())
+                      time.sleep(60)
+
+              # e.g. double each n
 
 
               #
@@ -265,17 +263,19 @@ if __name__ == '__main__':
               # plt.clf()
               #
               #
-              #
-              print("POISSON MEASURATION")
-              poissonMeasurations = []
 
-              with open("serviceStatsOutput/"+folderName+"/poissonMeasurations.txt", 'a') as f:
-                  for i in range(1,maxR,1):
-                      a = measure_stat_poisson(i,seconds)
-                      print(a.toString())
-                      poissonMeasurations.append(a)
-                      f.write(a.toStructure())
-                      time.sleep(60)
+
+              #
+              # print("POISSON MEASURATION")
+              # poissonMeasurations = []
+              #
+              # with open("serviceStatsOutput/"+folderName+"/poissonMeasurations.txt", 'a') as f:
+              #     for i in range(1,maxR,1):
+              #         a = measure_stat_poisson(i,seconds)
+              #         print(a.toString())
+              #         poissonMeasurations.append(a)
+              #         f.write(a.toStructure())
+              #         time.sleep(60)
           elif (int(val) == 4):
                    print("entrato")
                    measurations = []

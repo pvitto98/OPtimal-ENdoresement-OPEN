@@ -28,6 +28,7 @@ cp ${ORIGINAL_PATH}/configtx/configtx.yaml ${TEST_NET_PATH}/configtx/configtx.ya
 ########## CONFIGURATION FILES
 #cp -R ${TEST_NET_PATH}/ ${MOD_PATH}/configurationFiles
 rm -R ${TEST_NET_PATH}/configurationFiles
+rm ${TEST_NET_PATH}/peerTX.sh
 
 ################
 cp ${TEST_NET_PATH}/hyperledgerScript.py ${MOD_PATH}/hyperledgerScript.py

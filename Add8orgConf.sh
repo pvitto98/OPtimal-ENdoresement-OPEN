@@ -24,6 +24,7 @@ mkdir ${ORIGINAL_PATH}
 mkdir ${ORIGINAL_PATH}/configtx
 cp ${TEST_NET_PATH}/configtx/configtx.yaml ${ORIGINAL_PATH}/configtx/configtx.yaml
 cp ${MOD_PATH}/configtx/configtx_MOD.yaml ${TEST_NET_PATH}/configtx/configtx.yaml
+cp ${MOD_PATH}/peerTX.sh ${TEST_NET_PATH}/peerTX.sh
 
 ############ CONFIGURATION FILES
 cp -r ${MOD_PATH}/configurationFiles ${TEST_NET_PATH}
