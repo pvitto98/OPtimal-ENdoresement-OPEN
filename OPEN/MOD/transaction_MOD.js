@@ -207,11 +207,14 @@ class Transaction {
     async submit(...args) {
         const method = `submit[${this.name}]`;
         logger.debug('%s - start', method);
+
         const channel = this.contract.network.getChannel();
         const transactionOptions = this.gatewayOptions.eventHandlerOptions;
         // This is the object that will centralize this endorsement activities
         // with the fabric network
         const endorsement = channel.newEndorsement(this.contract.chaincodeId);
+        console.log("args:")
+        console.log(args)
         const proposalBuildRequest = this.newBuildProposalRequest(args);
         logger.debug('%s - build and send the endorsement', method);
         // build the outbound request along with getting a new transactionId
@@ -345,13 +348,18 @@ class Transaction {
         const json = JSON.stringify(state);
         return Buffer.from(json);
     }
+
     newBuildProposalRequest(args) {
+      console.log(this.name)
         const request = {
             fcn: this.name,
             args: args,
             generateTransactionId: false
         };
         if (this.transientMap) {
+            console.log("transientmap")
+
+            console.log(this.transientMap)
             request.transientMap = this.transientMap;
         }
         return request;

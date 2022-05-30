@@ -22,7 +22,7 @@ const mspOrg1 = 'Org1MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const org1UserId = 'appUser';
 
-const NUMBER_OF_TRANSACTIONS = 10
+const NUMBER_OF_TRANSACTIONS = 1
 
 const timestamp = performance.now()
 
@@ -145,7 +145,7 @@ async function main() {
 
 				// console.log(contract.network.getChannel().getEndorser("peer0.org1.example.com:7051"))
 				// contract.network.getChannel().removeEndorser(contract.network.getChannel().getEndorser("peer0.org1.example.com:7051"))
-				assetName = 'asset' + i
+				assetName = 'asset1_0e12' + i
 				var result = await contract.submitTransaction('CreateAsset', assetName , "yellow", 1, "Gina", 1000)
 
 
@@ -162,26 +162,26 @@ async function main() {
 
 			}
 
-			// 			//
-			// 			// const mspId = gateway.getIdentity().mspId;
-			// 			// var targets = contract.network.getChannel().getEndorsers(mspId);
-			// 			//
-			// 			// console.log(targets)
+						//
+						// const mspId = gateway.getIdentity().mspId;
+						// var targets = contract.network.getChannel().getEndorsers(mspId);
+						//
+						// console.log(targets)
+
+			// for (let i = 0; i < NUMBER_OF_TRANSACTIONS; i++) {
+			// 	var startTime = performance.now()
 			//
-			for (let i = 0; i < NUMBER_OF_TRANSACTIONS; i++) {
-				var startTime = performance.now()
-
-				assetName = 'asset' + i
-
-
-				result = await contract.submitTransaction('DeleteAsset', assetName)
-				if (`${result}` !== '') {
-					// console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-					console.log("")
-					console.log(assetName +  ` removed!`);
-				}
-
-			}
+			// 	assetName = 'asset' + i
+			//
+			//
+			// 	result = await contract.submitTransaction('DeleteAsset', assetName)
+			// 	if (`${result}` !== '') {
+			// 		// console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+			// 		console.log("")
+			// 		console.log(assetName +  ` removed!`);
+			// 	}
+			//
+			// }
 
 		} finally {
 			// Disconnect from the gateway when the application is closing

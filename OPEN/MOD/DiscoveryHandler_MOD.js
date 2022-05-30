@@ -26,7 +26,7 @@ const { performance } = require('perf_hooks');
  * ["RND"]      --> RND_HALF
  * ["RND", N]   --> RND_N
  */
-let MODE = ["RND",3]
+let MODE = ["ORIGINAL"]
 
 //#### OTHER VALUES
 const NUM_ORG = 8;
@@ -370,7 +370,6 @@ class DiscoveryHandler extends ServiceHandler {
 		}
 
 		// forces a refresh if needed
-		//AO
 		await this.discoveryService.getDiscoveryResults(true);
 		const responses = [];
 		const endorsers = this.discoveryService.channel.getEndorsers(mspid);
@@ -495,6 +494,7 @@ class DiscoveryHandler extends ServiceHandler {
 
 		let timeout = getConfigSetting('requestTimeout');
 		if (request.requestTimeout) {
+      console.log("requestTimeout!")
 			timeout = request.requestTimeout;
 		}
 
@@ -503,21 +503,36 @@ class DiscoveryHandler extends ServiceHandler {
     // IL: pure start time => (0)
     endorse_time.push(performance.now());
 
-    const results = await this.discoveryService.getDiscoveryResults(true); //// IMAN: we need the sample response to generate for OPEN.
+    //const results = await this.discoveryService.getDiscoveryResults(true); //// IMAN: we need the sample response to generate for OPEN.
 
     // console.log(" G0 -------------> " + results.endorsement_plan.groups.G0.peers[0].mspid)
     // console.log(" G1 -------------> " + results.endorsement_plan.groups.G1.peers[0].mspid)
 
     // IL: After discovery service responce start time => (1)
+    console.log("signedProposal")
+    console.log(signedProposal)
+    console.log("request")
+    console.log(request)
 
     endorse_time.push(performance.now());
 
     if (MODE[0] == "ORIGINAL"){
-      // const results = await this.discoveryService.getDiscoveryResults(true); //// IMAN: we need the sample response to generate for OPEN.
+       const results = await this.discoveryService.getDiscoveryResults(true); //// IMAN: we need the sample response to generate for OPEN.
+
+       console.log("Results")
+       console.log(results)
+       console.log("Results.endorsementPlan")
+       console.log(results.endorsement_plan)
+
       if (results && results.peers_by_org && request.requiredOrgs) {
         // special case when user knows which organizations to send the endorsement
         // let's build our own endorsement plan so that we can use the sorting and sending code
+        // console.log("PRIMA")
+        // console.log(endorsement_plan.layouts)
         const endorsement_plan = this._buildRequiredOrgPlan(results.peers_by_org, request.requiredOrgs);
+        // console.log("DOPO")
+        // console.log(endorsement_plan.layouts)
+
         // console.log("ok")
         // remove conflicting settings
         const orgs_request = {
@@ -528,12 +543,20 @@ class DiscoveryHandler extends ServiceHandler {
         return this._endorse(endorsement_plan, orgs_request, signedProposal, timeout, endorse_time);
       } else if (results && results.endorsement_plan) {
         // normal processing of the discovery results
+
         const working_discovery = JSON.parse(JSON.stringify(results.endorsement_plan));
+        ////GIA FORMATTATI
+        console.log("DOPO")
+        // console.log(results.endorsement_plan.layouts)
 
         return this._endorse(working_discovery, request, signedProposal, timeout, endorse_time);
       } else if (results && results.peers_by_org) {
         // special case when the chaincode is system chaincode without an endorsement policy
+
+
         const endorsement_plan = this._buildAllOrgPlan(results.peers_by_org);
+
+
 
         return this._endorse(endorsement_plan, request, signedProposal, timeout);
       } else {
@@ -655,61 +678,84 @@ class DiscoveryHandler extends ServiceHandler {
 		results.failed_endorsements = []; // from all failed layouts
 		results.success = false;
 
-		const required = this._create_map(request.required, 'endpoint');
-		const preferred = this._create_map(request.preferred, 'endpoint');
-		const ignored = this._create_map(request.ignored, 'endpoint');
-		const required_orgs = this._create_map(request.requiredOrgs, 'mspid');
-		const preferred_orgs = this._create_map(request.preferredOrgs, 'mspid');
-		const ignored_orgs = this._create_map(request.ignoredOrgs, 'mspid');
+    if (MODE[0] == "ORIGINAL"){
 
-		let preferred_height_gap = Long.fromInt(1); // default of one block
-		try {
-			if (Number.isInteger(request.preferredHeightGap) || request.preferredHeightGap) {
-				preferred_height_gap = convertToLong(request.preferredHeightGap, true);
-			}
-		} catch (error) {
-			throw Error('preferred_height_gap setting is not a number');
-		}
+  		const required = this._create_map(request.required, 'endpoint');
+  		const preferred = this._create_map(request.preferred, 'endpoint');
+  		const ignored = this._create_map(request.ignored, 'endpoint');
+  		const required_orgs = this._create_map(request.requiredOrgs, 'mspid');
+  		const preferred_orgs = this._create_map(request.preferredOrgs, 'mspid');
+  		const ignored_orgs = this._create_map(request.ignoredOrgs, 'mspid');
 
-		let sort = BLOCK_HEIGHT;
-		if (request.sort) {
-			if (request.sort === BLOCK_HEIGHT) {
-				sort = BLOCK_HEIGHT;
-			} else if (request.sort === RANDOM) {
-				sort = RANDOM;
-			} else {
-				throw Error('sort parameter is not valid');
-			}
-		}
+  		let preferred_height_gap = Long.fromInt(1); // default of one block
+  		try {
+  			if (Number.isInteger(request.preferredHeightGap) || request.preferredHeightGap) {
+  				preferred_height_gap = convertToLong(request.preferredHeightGap, true);
+  			}
+  		} catch (error) {
+  			throw Error('preferred_height_gap setting is not a number');
+  		}
 
-		// fix the peer group lists to reflect the options the user has provided
-		this._modify_groups(
-			required,
-			preferred,
-			ignored,
-			required_orgs,
-			preferred_orgs,
-			ignored_orgs,
-			preferred_height_gap,
-			sort,
-			endorsement_plan
-		);
+  		let sort = BLOCK_HEIGHT;
+  		if (request.sort) {
+  			if (request.sort === BLOCK_HEIGHT) {
+  				sort = BLOCK_HEIGHT;
+  			} else if (request.sort === RANDOM) {
+  				sort = RANDOM;
+  			} else {
+  				throw Error('sort parameter is not valid');
+  			}
+  		}
 
-		// always randomize the layouts
-		endorsement_plan.layouts = this._getRandom(endorsement_plan.layouts);
+      for (const layout_index in endorsement_plan.layouts) {
+        let res="{"
+        let layout = endorsement_plan.layouts[layout_index]
+        for (const group_name in layout ) { // IL: everything is officially starting here
+        // IL: update the related group_name(i.e. peer) start time
+        const required = layout[group_name];
+        const group = endorsement_plan.groups[group_name];
+        res=res.concat(group_name +":" + required+ ",")
+        }
+        res=res.concat("}")
+        fs.appendFile("./outputAAA.txt",  res  + "\n" , function(err) {if(err) {return console.log(err);}});
+
+      }
+
+
+
+  		// fix the peer group lists to reflect the options the user has provided
+  		 this._modify_groups(
+  			required,
+  			preferred,
+  			ignored,
+  			required_orgs,
+  			preferred_orgs,
+  			ignored_orgs,
+  			preferred_height_gap,
+  			sort,
+  			endorsement_plan
+  		);
+
+      //LAYOUT  GIA MULTIPLI
+  		// always randomize the layouts
+  		endorsement_plan.layouts = this._getRandom(endorsement_plan.layouts);
+      // console.log("DIM: " + endorsement_plan.layouts.lenght)
+      // fs.appendFile("./outputAAA.txt", endorsement_plan.layouts , function(err) {if(err) {return console.log(err);}});
+
+    }
 
 		let matchError = false;
 
 		// loop through the layouts trying to complete one successfully
 		for (const layout_index in endorsement_plan.layouts) {
 			logger.debug('%s - starting layout plan %s', method, layout_index);
+
+      console.log(endorsement_plan.layouts[layout_index])
 			const layout_results = await this._endorse_layout(layout_index, endorsement_plan, proposal, timeout, endorse_time, opt);
 			// if this layout is successful then we are done
 			if (layout_results.success) {
         // make sure all responses have the same endorsement read/write set
-				//double check -->errors
-        console.log("results.endorsements:")
-        console.log(results.endorsements)
+				// //double check -->errors
 				if (this.compareProposalResponseResults(layout_results.endorsements)) {
 					logger.debug('%s - layout plan %s completed successfully', method, layout_index);
 					results.endorsements = layout_results.endorsements;
@@ -756,11 +802,15 @@ class DiscoveryHandler extends ServiceHandler {
     endorse_time.push(performance.now());
     // IL: [{group_name:start_time},{group_name:finishe_time}] for peers in Layout => (3)
     endorse_time.push([{},{}]);
+
+
     for (const group_name in layout) { // IL: everything is officially starting here
       // IL: update the related group_name(i.e. peer) start time
       endorse_time[3][0][group_name] = performance.now();
       const required = layout[group_name];
+      console.log("required:" + required)
       const group = endorsement_plan.groups[group_name];
+      console.log(group)
       // make sure there are enough peers in the group to satisfy required
       if (required > group.peers.length) {
         results.success = false;
@@ -770,12 +820,14 @@ class DiscoveryHandler extends ServiceHandler {
         break; // no need to look at other groups, this layout failed
       }
       for (let x = 0; x<required; x++) {
+        console.log(group_name)
         const endorser_process =
           this._build_endorse_group_member(endorsement_plan, group, proposal, timeout, endorser_process_index++, group_name, endorse_time);
         endorsers.push(endorser_process);
       }
     } // IL: an "endorser_process" has been built and is put as an endorser in endorsers
 
+    ///results.success can be false if one of the configurations went wrong. IN that case the endorsementrequests are not sent.
     // this part is waiting for the response of the whole layout.(we need to separate them)
 		if (results.success) {
 			results.endorsements = await this._execute_endorsements(endorsers, endorse_time,opt);
@@ -888,7 +940,6 @@ class DiscoveryHandler extends ServiceHandler {
 		const endorsement_plan = {plan_id: 'all organizations'};
 		endorsement_plan.groups = {};
 		endorsement_plan.layouts = [{}]; // only one layout which will have all organizations
-		let notFound = true;
 
 		Object.keys(peers_by_org).forEach((mspid) => {
 			const org = peers_by_org[mspid];
@@ -896,7 +947,6 @@ class DiscoveryHandler extends ServiceHandler {
 				endorsement_plan.groups[mspid] = {}; // make a group for each
 				endorsement_plan.groups[mspid].peers = JSON.parse(JSON.stringify(org.peers)); // now put in all peers from that organization
 				endorsement_plan.layouts[0][mspid] = 1; // add this org to the one layout and require one peer to endorse
-				notFound = false;
 			} else {
 				logger.debug('%s - discovery plan does not have peers for %', method, mspid);
 			}
@@ -913,62 +963,63 @@ class DiscoveryHandler extends ServiceHandler {
 	 * endorsements or an error object
 	 */
 
-   _build_endorse_group_member(endorsement_plan, group, proposal, timeout, endorser_process_index, group_name) {
-   const method = '_build_endorse_group_member >> ' + group_name + ':' + endorser_process_index;
-   logger.debug('%s - start', method);
+ //   _build_endorse_group_member(endorsement_plan, group, proposal, timeout, endorser_process_index, group_name) {
+ //   const method = '_build_endorse_group_member >> ' + group_name + ':' + endorser_process_index;
+ //   logger.debug('%s - start', method);
+ //
+ //   // eslint-disable-next-line no-async-promise-executor
+ //   return new Promise(async (resolve) => {
+ //     let endorsement = null;
+ //     for (const peer_info of group.peers) {
+ //       endorsement = endorsement_plan.endorsements[peer_info.name];
+ //       if (endorsement) {
+ //         logger.debug('%s - existing peer %s endorsement will be used', method, peer_info.name);
+ //       } else {
+ //         if (peer_info.in_use) {
+ //           logger.debug('%s - peer in use %s, skipping', method, peer_info.name);
+ //         } else {
+ //           const peer = this._getPeer(peer_info.endpoint);
+ //           if (peer) {
+ //             logger.debug('%s - send endorsement to %s', method, peer_info.name);
+ //             peer_info.in_use = true;
+ //             try {
+ //               const isConnected = await peer.checkConnection();
+ //               if (isConnected) {
+ //                 endorsement = await peer.sendProposal(proposal, timeout);
+ //                 // save this endorsement results in case we try this peer again
+ //                 logger.debug('%s - endorsement completed to %s', method, peer_info.name);
+ //               } else {
+ //                 endorsement = peer.getCharacteristics(new Error(`Peer ${peer.name} is not connected`));
+ //               }
+ //             } catch (error) {
+ //               endorsement = peer.getCharacteristics(error);
+ //               logger.error('%s - error on endorsement to %s error %s', method, peer_info.name, error);
+ //             }
+ //             // save this endorsement results in case we try this peer again
+ //             // eslint-disable-next-line require-atomic-updates
+ //             endorsement_plan.endorsements[peer_info.name] = endorsement;
+ //           } else {
+ //             logger.debug('%s - peer %s not assigned to this channel', method, peer_info.name);
+ //           }
+ //         }
+ //       }
+ //       if (endorsement && !(endorsement instanceof Error)) {
+ //         logger.debug('%s - peer %s endorsement will be used', method, peer_info.name);
+ //         break;
+ //       }
+ //     }
+ //
+ //     if (endorsement) {
+ //       logger.debug('%s - returning endorsement', method);
+ //       resolve(endorsement);
+ //     } else {
+ //       logger.error('%s - returning an error endorsement, no endorsement made', method);
+ //       resolve(new Error('No endorsement available'));
+ //     }
+ //   });
+ // }
 
-   // eslint-disable-next-line no-async-promise-executor
-   return new Promise(async (resolve) => {
-     let endorsement = null;
-     for (const peer_info of group.peers) {
-       endorsement = endorsement_plan.endorsements[peer_info.name];
-       if (endorsement) {
-         logger.debug('%s - existing peer %s endorsement will be used', method, peer_info.name);
-       } else {
-         if (peer_info.in_use) {
-           logger.debug('%s - peer in use %s, skipping', method, peer_info.name);
-         } else {
-           const peer = this._getPeer(peer_info.endpoint);
-           if (peer) {
-             logger.debug('%s - send endorsement to %s', method, peer_info.name);
-             peer_info.in_use = true;
-             try {
-               const isConnected = await peer.checkConnection();
-               if (isConnected) {
-                 endorsement = await peer.sendProposal(proposal, timeout);
-                 // save this endorsement results in case we try this peer again
-                 logger.debug('%s - endorsement completed to %s', method, peer_info.name);
-               } else {
-                 endorsement = peer.getCharacteristics(new Error(`Peer ${peer.name} is not connected`));
-               }
-             } catch (error) {
-               endorsement = peer.getCharacteristics(error);
-               logger.error('%s - error on endorsement to %s error %s', method, peer_info.name, error);
-             }
-             // save this endorsement results in case we try this peer again
-             // eslint-disable-next-line require-atomic-updates
-             endorsement_plan.endorsements[peer_info.name] = endorsement;
-           } else {
-             logger.debug('%s - peer %s not assigned to this channel', method, peer_info.name);
-           }
-         }
-       }
-       if (endorsement && !(endorsement instanceof Error)) {
-         logger.debug('%s - peer %s endorsement will be used', method, peer_info.name);
-         break;
-       }
-     }
-
-     if (endorsement) {
-       logger.debug('%s - returning endorsement', method);
-       resolve(endorsement);
-     } else {
-       logger.error('%s - returning an error endorsement, no endorsement made', method);
-       resolve(new Error('No endorsement available'));
-     }
-   });
- }
-
+////FOR EACH ORGANIZATION
 	_build_endorse_group_member(endorsement_plan, group, proposal, timeout, endorser_process_index, group_name, endorse_time) {
     const method = '_build_endorse_group_member >> ' + group_name + ':' + endorser_process_index;
     logger.debug('%s - start', method);
@@ -978,7 +1029,9 @@ class DiscoveryHandler extends ServiceHandler {
     return new Promise(async (resolve) => {
       let endorsement = null;
 
+      //this is a fake loop
       for (const peer_info of group.peers) {
+
         endorsement = endorsement_plan.endorsements[peer_info.name];
         /////SEMBRA CHE LA RICHIESTA DI ENDORSEMENT LA MANDI SOLO A COLORO CHE NON SONO ENDORSERS
         if (endorsement) {
@@ -1049,6 +1102,7 @@ class DiscoveryHandler extends ServiceHandler {
 	 */
 	_modify_groups(required, preferred, ignored, required_orgs, preferred_orgs, ignored_orgs, preferred_height_gap, sort, endorsement_plan) {
 		const method = '_modify_groups';
+    console.log("MODIFY GROUP!")
 		logger.debug('%s - start', method);
 		logger.debug('%s - required:%j', method, required);
 		logger.debug('%s - preferred:%j', method, preferred);
